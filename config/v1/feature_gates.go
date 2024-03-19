@@ -553,4 +553,11 @@ var (
 				productScope(ocpSpecific).
 				enableIn(TechPreviewNoUpgrade).
 				mustRegister()
+
+	FeatureObservabilityDataExport = newFeatureGate("ObservabilityDataExport").
+					reportProblemsToJiraComponent("mon").
+					contactPerson("jfajersk").
+					productScope(ocpSpecific).
+					enableIn(TechPreviewNoUpgrade).
+					mustRegister()
 )

@@ -101,6 +101,9 @@
                         "name": "NodeSwap"
                     },
                     {
+                        "name": "ObservabilityDataExport"
+                    },
+                    {
                         "name": "OnClusterBuild"
                     },
                     {

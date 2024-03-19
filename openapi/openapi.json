@@ -22872,6 +22872,192 @@
         }
       }
     },
+    "com.github.openshift.api.monitoring.v1alpha1.DataExporter": {
+      "type": "object"
+    },
+    "com.github.openshift.api.monitoring.v1alpha1.DataSink": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "prometheusRemoteWriteSpec": {
+          "$ref": "#/definitions/com.github.openshift.api.monitoring.v1alpha1.PrometheusRemoteWriteSpec"
+        },
+        "type": {
+          "type": "string"
+        }
+      }
+    },
+    "com.github.openshift.api.monitoring.v1alpha1.DataSource": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "prometheusFederateSpec": {
+          "description": "not sure if validations a la https://github.com/kubernetes-sigs/controller-tools/issues/461#issuecomment-1982741599 make any sense here",
+          "$ref": "#/definitions/com.github.openshift.api.monitoring.v1alpha1.PrometheusFederateSpec"
+        },
+        "type": {
+          "description": "use discrimated unions here, see https://github.com/openshift/enhancements/blob/master/dev-guide/api-conventions.md#discriminated-unions",
+          "type": "string"
+        }
+      }
+    },
+    "com.github.openshift.api.monitoring.v1alpha1.DataTransformation": {
+      "type": "object",
+      "properties": {
+        "dataTransformationSpec": {
+          "default": {},
+          "$ref": "#/definitions/com.github.openshift.api.monitoring.v1alpha1.DataTransformationSpec"
+        },
+        "type": {
+          "type": "string"
+        }
+      }
+    },
+    "com.github.openshift.api.monitoring.v1alpha1.DataTransformationSpec": {
+      "type": "object"
+    },
+    "com.github.openshift.api.monitoring.v1alpha1.ObservabilityDataExport": {
+      "description": "ObservabilityDataExport defines a set of observability data export pipelines\n\nCompatibility level 4: No compatibility is provided, the API can change at any point for any reason. These capabilities should not be used by applications needing long term support.",
+      "type": "object",
+      "required": [
+        "spec"
+      ],
+      "properties": {
+        "apiVersion": {
+          "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+          "type": "string"
+        },
+        "kind": {
+          "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+          "type": "string"
+        },
+        "metadata": {
+          "description": "metadata is the standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata",
+          "default": {},
+          "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta"
+        },
+        "spec": {
+          "description": "spec describes the desired state of this ObservabilityDataExport object.",
+          "default": {},
+          "$ref": "#/definitions/com.github.openshift.api.monitoring.v1alpha1.ObservabilityDataExportSpec"
+        },
+        "status": {
+          "description": "status describes the current state of this ObservabilityDataExport object.",
+          "default": {},
+          "$ref": "#/definitions/com.github.openshift.api.monitoring.v1alpha1.ObservabilityDataExportStatus"
+        }
+      }
+    },
+    "com.github.openshift.api.monitoring.v1alpha1.ObservabilityDataExportList": {
+      "description": "ObservabilityDataExportList is a list of ObservabilityDataExports.\n\nCompatibility level 4: No compatibility is provided, the API can change at any point for any reason. These capabilities should not be used by applications needing long term support.",
+      "type": "object",
+      "required": [
+        "items"
+      ],
+      "properties": {
+        "apiVersion": {
+          "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+          "type": "string"
+        },
+        "items": {
+          "description": "items is a list of AlertRelabelConfigs.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/com.github.openshift.api.monitoring.v1alpha1.ObservabilityDataExport"
+          }
+        },
+        "kind": {
+          "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+          "type": "string"
+        },
+        "metadata": {
+          "description": "metadata is the standard list's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata",
+          "default": {},
+          "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.ListMeta"
+        }
+      }
+    },
+    "com.github.openshift.api.monitoring.v1alpha1.ObservabilityDataExportSpec": {
+      "description": "ObservabilityDataExportSpec is the desired state of an ObservabilityDataExport resource.",
+      "type": "object",
+      "properties": {
+        "exporters": {
+          "type": "array",
+          "items": {
+            "default": {},
+            "$ref": "#/definitions/com.github.openshift.api.monitoring.v1alpha1.DataExporter"
+          }
+        },
+        "sinks": {
+          "type": "array",
+          "items": {
+            "default": {},
+            "$ref": "#/definitions/com.github.openshift.api.monitoring.v1alpha1.DataSink"
+          }
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "default": {},
+            "$ref": "#/definitions/com.github.openshift.api.monitoring.v1alpha1.DataSource"
+          }
+        },
+        "transformations": {
+          "type": "array",
+          "items": {
+            "default": {},
+            "$ref": "#/definitions/com.github.openshift.api.monitoring.v1alpha1.DataTransformation"
+          }
+        }
+      }
+    },
+    "com.github.openshift.api.monitoring.v1alpha1.ObservabilityDataExportStatus": {
+      "description": "ObservabilityDataExportStatus is the status of an ObservabilityDataExport resource.",
+      "type": "object",
+      "properties": {
+        "conditions": {
+          "description": "conditions contains details on the state of the ObservabilityDataExport, may be empty.",
+          "type": "array",
+          "items": {
+            "default": {},
+            "$ref": "#/definitions/io.k8s.apimachinery.pkg.apis.meta.v1.Condition"
+          }
+        }
+      }
+    },
+    "com.github.openshift.api.monitoring.v1alpha1.PrometheusFederateSpec": {
+      "type": "object",
+      "properties": {
+        "interval": {
+          "type": "string"
+        },
+        "matchers": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "default": ""
+          }
+        },
+        "target": {
+          "type": "string"
+        }
+      }
+    },
+    "com.github.openshift.api.monitoring.v1alpha1.PrometheusRemoteWriteSpec": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
     "com.github.openshift.api.monitoring.v1alpha1.PrometheusRuleRef": {
       "description": "PrometheusRuleRef is a reference to an existing PrometheusRule object.  Each AlertingRule instance results in a generated PrometheusRule object in the same namespace, which is always the openshift-monitoring namespace.  This is used to point to the generated PrometheusRule object in the AlertingRule status.",
       "type": "object",

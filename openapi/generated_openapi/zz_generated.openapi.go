@@ -775,6 +775,17 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"github.com/openshift/api/monitoring/v1alpha1.AlertingRuleList":                                      schema_openshift_api_monitoring_v1alpha1_AlertingRuleList(ref),
 		"github.com/openshift/api/monitoring/v1alpha1.AlertingRuleSpec":                                      schema_openshift_api_monitoring_v1alpha1_AlertingRuleSpec(ref),
 		"github.com/openshift/api/monitoring/v1alpha1.AlertingRuleStatus":                                    schema_openshift_api_monitoring_v1alpha1_AlertingRuleStatus(ref),
+		"github.com/openshift/api/monitoring/v1alpha1.DataExporter":                                          schema_openshift_api_monitoring_v1alpha1_DataExporter(ref),
+		"github.com/openshift/api/monitoring/v1alpha1.DataSink":                                              schema_openshift_api_monitoring_v1alpha1_DataSink(ref),
+		"github.com/openshift/api/monitoring/v1alpha1.DataSource":                                            schema_openshift_api_monitoring_v1alpha1_DataSource(ref),
+		"github.com/openshift/api/monitoring/v1alpha1.DataTransformation":                                    schema_openshift_api_monitoring_v1alpha1_DataTransformation(ref),
+		"github.com/openshift/api/monitoring/v1alpha1.DataTransformationSpec":                                schema_openshift_api_monitoring_v1alpha1_DataTransformationSpec(ref),
+		"github.com/openshift/api/monitoring/v1alpha1.ObservabilityDataExport":                               schema_openshift_api_monitoring_v1alpha1_ObservabilityDataExport(ref),
+		"github.com/openshift/api/monitoring/v1alpha1.ObservabilityDataExportList":                           schema_openshift_api_monitoring_v1alpha1_ObservabilityDataExportList(ref),
+		"github.com/openshift/api/monitoring/v1alpha1.ObservabilityDataExportSpec":                           schema_openshift_api_monitoring_v1alpha1_ObservabilityDataExportSpec(ref),
+		"github.com/openshift/api/monitoring/v1alpha1.ObservabilityDataExportStatus":                         schema_openshift_api_monitoring_v1alpha1_ObservabilityDataExportStatus(ref),
+		"github.com/openshift/api/monitoring/v1alpha1.PrometheusFederateSpec":                                schema_openshift_api_monitoring_v1alpha1_PrometheusFederateSpec(ref),
+		"github.com/openshift/api/monitoring/v1alpha1.PrometheusRemoteWriteSpec":                             schema_openshift_api_monitoring_v1alpha1_PrometheusRemoteWriteSpec(ref),
 		"github.com/openshift/api/monitoring/v1alpha1.PrometheusRuleRef":                                     schema_openshift_api_monitoring_v1alpha1_PrometheusRuleRef(ref),
 		"github.com/openshift/api/monitoring/v1alpha1.RelabelConfig":                                         schema_openshift_api_monitoring_v1alpha1_RelabelConfig(ref),
 		"github.com/openshift/api/monitoring/v1alpha1.Rule":                                                  schema_openshift_api_monitoring_v1alpha1_Rule(ref),
@@ -39416,6 +39427,375 @@ func schema_openshift_api_monitoring_v1alpha1_AlertingRuleStatus(ref common.Refe
 		},
 		Dependencies: []string{
 			"github.com/openshift/api/monitoring/v1alpha1.PrometheusRuleRef"},
+	}
+}
+
+func schema_openshift_api_monitoring_v1alpha1_DataExporter(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+			},
+		},
+	}
+}
+
+func schema_openshift_api_monitoring_v1alpha1_DataSink(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"name": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"type": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"prometheusRemoteWriteSpec": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("github.com/openshift/api/monitoring/v1alpha1.PrometheusRemoteWriteSpec"),
+						},
+					},
+				},
+			},
+		},
+		Dependencies: []string{
+			"github.com/openshift/api/monitoring/v1alpha1.PrometheusRemoteWriteSpec"},
+	}
+}
+
+func schema_openshift_api_monitoring_v1alpha1_DataSource(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"name": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"type": {
+						SchemaProps: spec.SchemaProps{
+							Description: "use discrimated unions here, see https://github.com/openshift/enhancements/blob/master/dev-guide/api-conventions.md#discriminated-unions",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"prometheusFederateSpec": {
+						SchemaProps: spec.SchemaProps{
+							Description: "not sure if validations a la https://github.com/kubernetes-sigs/controller-tools/issues/461#issuecomment-1982741599 make any sense here",
+							Ref:         ref("github.com/openshift/api/monitoring/v1alpha1.PrometheusFederateSpec"),
+						},
+					},
+				},
+			},
+		},
+		Dependencies: []string{
+			"github.com/openshift/api/monitoring/v1alpha1.PrometheusFederateSpec"},
+	}
+}
+
+func schema_openshift_api_monitoring_v1alpha1_DataTransformation(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"type": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"dataTransformationSpec": {
+						SchemaProps: spec.SchemaProps{
+							Default: map[string]interface{}{},
+							Ref:     ref("github.com/openshift/api/monitoring/v1alpha1.DataTransformationSpec"),
+						},
+					},
+				},
+			},
+		},
+		Dependencies: []string{
+			"github.com/openshift/api/monitoring/v1alpha1.DataTransformationSpec"},
+	}
+}
+
+func schema_openshift_api_monitoring_v1alpha1_DataTransformationSpec(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+			},
+		},
+	}
+}
+
+func schema_openshift_api_monitoring_v1alpha1_ObservabilityDataExport(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "ObservabilityDataExport defines a set of observability data export pipelines\n\nCompatibility level 4: No compatibility is provided, the API can change at any point for any reason. These capabilities should not be used by applications needing long term support.",
+				Type:        []string{"object"},
+				Properties: map[string]spec.Schema{
+					"kind": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"apiVersion": {
+						SchemaProps: spec.SchemaProps{
+							Description: "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"metadata": {
+						SchemaProps: spec.SchemaProps{
+							Description: "metadata is the standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata",
+							Default:     map[string]interface{}{},
+							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta"),
+						},
+					},
+					"spec": {
+						SchemaProps: spec.SchemaProps{
+							Description: "spec describes the desired state of this ObservabilityDataExport object.",
+							Default:     map[string]interface{}{},
+							Ref:         ref("github.com/openshift/api/monitoring/v1alpha1.ObservabilityDataExportSpec"),
+						},
+					},
+					"status": {
+						SchemaProps: spec.SchemaProps{
+							Description: "status describes the current state of this ObservabilityDataExport object.",
+							Default:     map[string]interface{}{},
+							Ref:         ref("github.com/openshift/api/monitoring/v1alpha1.ObservabilityDataExportStatus"),
+						},
+					},
+				},
+				Required: []string{"spec"},
+			},
+		},
+		Dependencies: []string{
+			"github.com/openshift/api/monitoring/v1alpha1.ObservabilityDataExportSpec", "github.com/openshift/api/monitoring/v1alpha1.ObservabilityDataExportStatus", "k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta"},
+	}
+}
+
+func schema_openshift_api_monitoring_v1alpha1_ObservabilityDataExportList(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "ObservabilityDataExportList is a list of ObservabilityDataExports.\n\nCompatibility level 4: No compatibility is provided, the API can change at any point for any reason. These capabilities should not be used by applications needing long term support.",
+				Type:        []string{"object"},
+				Properties: map[string]spec.Schema{
+					"kind": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"apiVersion": {
+						SchemaProps: spec.SchemaProps{
+							Description: "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"metadata": {
+						SchemaProps: spec.SchemaProps{
+							Description: "metadata is the standard list's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata",
+							Default:     map[string]interface{}{},
+							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.ListMeta"),
+						},
+					},
+					"items": {
+						SchemaProps: spec.SchemaProps{
+							Description: "items is a list of AlertRelabelConfigs.",
+							Type:        []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Ref: ref("github.com/openshift/api/monitoring/v1alpha1.ObservabilityDataExport"),
+									},
+								},
+							},
+						},
+					},
+				},
+				Required: []string{"items"},
+			},
+		},
+		Dependencies: []string{
+			"github.com/openshift/api/monitoring/v1alpha1.ObservabilityDataExport", "k8s.io/apimachinery/pkg/apis/meta/v1.ListMeta"},
+	}
+}
+
+func schema_openshift_api_monitoring_v1alpha1_ObservabilityDataExportSpec(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "ObservabilityDataExportSpec is the desired state of an ObservabilityDataExport resource.",
+				Type:        []string{"object"},
+				Properties: map[string]spec.Schema{
+					"sources": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Default: map[string]interface{}{},
+										Ref:     ref("github.com/openshift/api/monitoring/v1alpha1.DataSource"),
+									},
+								},
+							},
+						},
+					},
+					"transformations": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Default: map[string]interface{}{},
+										Ref:     ref("github.com/openshift/api/monitoring/v1alpha1.DataTransformation"),
+									},
+								},
+							},
+						},
+					},
+					"sinks": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Default: map[string]interface{}{},
+										Ref:     ref("github.com/openshift/api/monitoring/v1alpha1.DataSink"),
+									},
+								},
+							},
+						},
+					},
+					"exporters": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Default: map[string]interface{}{},
+										Ref:     ref("github.com/openshift/api/monitoring/v1alpha1.DataExporter"),
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+		Dependencies: []string{
+			"github.com/openshift/api/monitoring/v1alpha1.DataExporter", "github.com/openshift/api/monitoring/v1alpha1.DataSink", "github.com/openshift/api/monitoring/v1alpha1.DataSource", "github.com/openshift/api/monitoring/v1alpha1.DataTransformation"},
+	}
+}
+
+func schema_openshift_api_monitoring_v1alpha1_ObservabilityDataExportStatus(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "ObservabilityDataExportStatus is the status of an ObservabilityDataExport resource.",
+				Type:        []string{"object"},
+				Properties: map[string]spec.Schema{
+					"conditions": {
+						SchemaProps: spec.SchemaProps{
+							Description: "conditions contains details on the state of the ObservabilityDataExport, may be empty.",
+							Type:        []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Default: map[string]interface{}{},
+										Ref:     ref("k8s.io/apimachinery/pkg/apis/meta/v1.Condition"),
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+		Dependencies: []string{
+			"k8s.io/apimachinery/pkg/apis/meta/v1.Condition"},
+	}
+}
+
+func schema_openshift_api_monitoring_v1alpha1_PrometheusFederateSpec(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"interval": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"target": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"matchers": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Default: "",
+										Type:    []string{"string"},
+										Format:  "",
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+	}
+}
+
+func schema_openshift_api_monitoring_v1alpha1_PrometheusRemoteWriteSpec(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"url": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"name": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+				},
+			},
+		},
 	}
 }
 

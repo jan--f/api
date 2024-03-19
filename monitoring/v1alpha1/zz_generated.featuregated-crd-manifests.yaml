@@ -46,3 +46,27 @@ alertingrules.monitoring.openshift.io:
   - AlertingRules
   Version: v1alpha1
 
+observabilitydataexport.monitoring.openshift.io:
+  Annotations:
+    description: OpenShift observability data export pipelines
+  ApprovedPRNumber: https://github.com/openshift/api/pull/TBD
+  CRDName: observabilitydataexport.monitoring.openshift.io
+  Capability: ""
+  Category: ""
+  FeatureGates:
+  - ObservabilityDataExport
+  FilenameOperatorName: monitoring
+  FilenameOperatorOrdering: "03"
+  FilenameRunLevel: "0000_50"
+  GroupName: monitoring.openshift.io
+  HasStatus: true
+  KindName: ObservabilityDataExport
+  Labels: {}
+  PluralName: observabilitydataexport
+  PrinterColumns: []
+  Scope: Namespaced
+  ShortNames: null
+  TopLevelFeatureGates:
+  - ObservabilityDataExport
+  Version: v1alpha1
+

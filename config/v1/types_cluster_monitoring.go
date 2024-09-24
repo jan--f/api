@@ -65,13 +65,15 @@ type ClusterMonitoringList struct {
 // ClusterMonitoringSpec defines the desired state of Cluster Monitoring Operator
 type ClusterMonitoringSpec struct {
 	// userDefined set the deployment mode for user-defined monitoring in addition to the default platform monitoring.
-	// +optional
 	UserDefined UserDefinedMonitoring `json:"userDefined,omitempty"`
 }
 
 // UserDefinedMonitoring config for user-defined projects.
 type UserDefinedMonitoring struct {
 	// mode defines the different configurations of UserDefinedMonitoring
+	// Valid values are UserDefinedDisabled and UserDefinedNamespaceIsolation
+	// UserDefinedDisabled disables monitoring for user-defined projects. This restricts the default monitoring stack, installed in the openshift-monitoring project, to monitor only platform namespaces, which prevents any custom monitoring configurations or resources from being applied to user-defined namespaces.
+	// UserDefinedNamespaceIsolation enables monitoring for user-defined projects with namespace-scoped tenancy. This ensures that metrics, alerts, and monitoring data are isolated at the namespace level.
 	// +kubebuilder:validation:Enum:="Disabled";"NamespaceIsolation"
 	Mode UserDefinedMode `json:"mode,omitempty"`
 }
@@ -79,7 +81,7 @@ type UserDefinedMonitoring struct {
 type UserDefinedMode string
 
 const (
-	// UserDefinedDisabled disables monitoring for user-defined projects. This restrics the default monitoring stack, installed in the openshift-monitoring project, to monitor only platform namespaces, which prevents any custom monitoring configurations or resources from being applied to user-defined namespaces.
+	// UserDefinedDisabled disables monitoring for user-defined projects. This restricts the default monitoring stack, installed in the openshift-monitoring project, to monitor only platform namespaces, which prevents any custom monitoring configurations or resources from being applied to user-defined namespaces.
 	UserDefinedDisabled UserDefinedMode = "Disabled"
 	// UserDefinedNamespaceIsolation enables monitoring for user-defined projects with namespace-scoped tenancy. This ensures that metrics, alerts, and monitoring data are isolated at the namespace level.
 	UserDefinedNamespaceIsolation UserDefinedMode = "NamespaceIsolation"

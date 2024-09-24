@@ -79,8 +79,8 @@ type UserDefinedMonitoring struct {
 type UserDefinedMode string
 
 const (
-	// UserDefinedDisabled disables monitoring for user-defined projects. Monitoring is limited to platform namespaces only, using the default monitoring stack installed in the openshift-monitoring project, preventing any custom monitoring configurations or resources from being applied to user-defined namespaces.
+	// UserDefinedDisabled disables monitoring for user-defined projects. This restrics the default monitoring stack, installed in the openshift-monitoring project, to monitor only platform namespaces, which prevents any custom monitoring configurations or resources from being applied to user-defined namespaces.
 	UserDefinedDisabled UserDefinedMode = "Disabled"
-	// UserDefinedNamespaceIsolation enables monitoring for user-defined projects with namespace-scoped tenancy, ensuring that metrics, alerts, and monitoring data are segregated at namespace level.
+	// UserDefinedNamespaceIsolation enables monitoring for user-defined projects with namespace-scoped tenancy. This ensures that metrics, alerts, and monitoring data are isolated at the namespace level.
 	UserDefinedNamespaceIsolation UserDefinedMode = "NamespaceIsolation"
 )
